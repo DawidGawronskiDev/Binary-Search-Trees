@@ -47,6 +47,41 @@ const buildTree = (arr, start, end) => {
   return newNode;
 };
 
+const binarySearch = (node, val) => {
+  if (node === null) {
+    return -1;
+  }
+
+  if (node.data === val) {
+    return node;
+  }
+
+  if (node.data > val) {
+    return binarySearch(node.left, val);
+  }
+
+  if (node.data < val) {
+    return binarySearch(node.right, val);
+  }
+};
+
+const insertVal = (node, val) => {
+  if (!node.left && node.data > val) {
+    return (node.left = new Node(val));
+  }
+  if (!node.right && node.data < val) {
+    return (node.right = new Node(val));
+  }
+
+  if (node.data > val) {
+    return insertVal(node.left, val);
+  }
+
+  if (node.data < val) {
+    return insertVal(node.right, val);
+  }
+};
+
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
@@ -60,7 +95,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-const newArr = [6, 8, 3, 2, 7, 3, 5, 9, 4, 7, 1, 8, -5, 60, 12, 50, 0];
+const newArr = [1, 2, 3, 4, 5, 6, 7, 55, 64, 88, 8, 9];
 const uniqueArr = removeDuplicate(newArr);
 const sortedArr = mergeSort(uniqueArr);
 
