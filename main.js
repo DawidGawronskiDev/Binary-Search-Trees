@@ -82,6 +82,18 @@ const insertVal = (node, val) => {
   }
 };
 
+const findMinVal = (node) => {
+  if (node === null) {
+    return null;
+  }
+
+  while (node.left !== null) {
+    return findMinVal(node.left);
+  }
+
+  return node.data;
+};
+
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
