@@ -82,7 +82,35 @@ const insertVal = (node, val) => {
   }
 };
 
-const deleteVal = (node, val) => {};
+const deleteVal = (node, val) => {
+  if (node === null) {
+    return null;
+  }
+
+  if (node.data === val) {
+    if (node.left === null && node.right === null) {
+      return null;
+    }
+
+    if (node.left === null) {
+      return node.right;
+    }
+
+    if (node.right === null) {
+      return node.left;
+    }
+
+    const minValue = findMinVal(node.right);
+    node.data = minValue;
+    node.right = deleteVal(node.right, minValue);
+  } else if (node.data > val) {
+    node.left = deleteVal(node.left, val);
+  } else {
+    node.right = deleteVal(node.right, val);
+  }
+
+  return node;
+};
 
 const findMinVal = (node) => {
   if (node === null) {
@@ -109,12 +137,14 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-const newArr = [1, 2, 3, 4, 5, 6, 7, 55, 64, 88, 8, 9];
+const newArr = [1, 2, 3, 4, 5, 6, 7];
 const uniqueArr = removeDuplicate(newArr);
 const sortedArr = mergeSort(uniqueArr);
 
 const root = buildTree(sortedArr, 0, sortedArr.length - 1);
 
 const newTree = new Tree(root);
+
+deleteVal(newTree.root, 7);
 
 prettyPrint(newTree.root);
