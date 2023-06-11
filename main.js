@@ -1,168 +1,22 @@
-class Node {
-  constructor(data) {
-    (this.data = data), (this.left = null), (this.right = null);
-  }
-}
+import Node from "./Node.js";
+import Tree from "./Tree.js";
 
-class Tree {
-  constructor(value) {
-    this.root = value;
-  }
-}
+import { mergeSort, merge } from "./mergeSort.js";
+import prettyPrint from "./prettyPrint.js";
 
 const removeDuplicate = (arr) => {
   return Array.from(new Set(arr));
 };
 
-const mergeSort = (arr) => {
-  if (arr.length < 2) return arr;
-
-  const m = Math.floor(arr.length / 2);
-  const lArr = arr.slice(0, m);
-  const rArr = arr.slice(m);
-
-  return merge(mergeSort(lArr), mergeSort(rArr));
+const transArr = (arr) => {
+  return mergeSort(removeDuplicate(arr));
 };
 
-const merge = (lArr, rArr) => {
-  const tempArr = [];
+const arr = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
-  while (lArr.length && rArr.length) {
-    lArr[0] <= rArr[0]
-      ? tempArr.push(lArr.shift())
-      : tempArr.push(rArr.shift());
-  }
-  return [...tempArr, ...lArr, ...rArr];
-};
+const newArr = transArr(arr);
 
-const buildTree = (arr, start, end) => {
-  if (start > end) return null;
-
-  const mid = Math.floor((start + end) / 2);
-  const newNode = new Node(arr[mid]);
-
-  newNode.left = buildTree(arr, start, mid - 1);
-  newNode.right = buildTree(arr, mid + 1, end);
-
-  return newNode;
-};
-
-const binarySearch = (node, val) => {
-  if (node === null) {
-    return -1;
-  }
-
-  if (node.data === val) {
-    return node;
-  }
-
-  if (node.data > val) {
-    return binarySearch(node.left, val);
-  }
-
-  if (node.data < val) {
-    return binarySearch(node.right, val);
-  }
-};
-
-const insertVal = (node, val) => {
-  if (!node.left && node.data > val) {
-    return (node.left = new Node(val));
-  }
-  if (!node.right && node.data < val) {
-    return (node.right = new Node(val));
-  }
-
-  if (node.data > val) {
-    return insertVal(node.left, val);
-  }
-
-  if (node.data < val) {
-    return insertVal(node.right, val);
-  }
-};
-
-const deleteVal = (node, val) => {
-  if (node === null) {
-    return null;
-  }
-
-  if (node.data === val) {
-    if (node.left === null && node.right === null) {
-      return null;
-    }
-
-    if (node.left === null) {
-      return node.right;
-    }
-
-    if (node.right === null) {
-      return node.left;
-    }
-
-    const minValue = findMinVal(node.right);
-    node.data = minValue;
-    node.right = deleteVal(node.right, minValue);
-  } else if (node.data > val) {
-    node.left = deleteVal(node.left, val);
-  } else {
-    node.right = deleteVal(node.right, val);
-  }
-
-  return node;
-};
-
-const findMinVal = (node) => {
-  if (node === null) {
-    return null;
-  }
-
-  while (node.left !== null) {
-    return findMinVal(node.left);
-  }
-
-  return node.data;
-};
-
-const find = (node, val) => {
-  if (!node) {
-    return null;
-  }
-
-  if (node.data == val) {
-    return node;
-  }
-
-  if (node.data > val) {
-    return find(node.left, val);
-  }
-
-  if (node.data < val) {
-    return find(node.right, val);
-  }
-};
-
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
-};
-
-const newArr = [1, 2, 3, 4, 5, 6, 7];
-const uniqueArr = removeDuplicate(newArr);
-const sortedArr = mergeSort(uniqueArr);
-
-const root = buildTree(sortedArr, 0, sortedArr.length - 1);
-
-const newTree = new Tree(root);
+const newTree = new Tree();
+newTree.buildTree(newArr);
 
 prettyPrint(newTree.root);
-
-console.log(find(newTree.root, 6));
