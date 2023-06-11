@@ -1,0 +1,19 @@
+{
+  "name": "binary-search-trees",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DawidGawronskiDev/Binary-Search-Trees.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DawidGawronskiDev/Binary-Search-Trees/issues"
+  },
+  "homepage": "https://github.com/DawidGawronskiDev/Binary-Search-Trees#readme"
+}

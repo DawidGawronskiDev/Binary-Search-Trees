@@ -82,6 +82,8 @@ const insertVal = (node, val) => {
   }
 };
 
+const deleteVal = (node, val) => {};
+
 const findMinVal = (node) => {
   if (node === null) {
     return null;
