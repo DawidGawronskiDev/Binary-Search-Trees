@@ -124,6 +124,24 @@ const findMinVal = (node) => {
   return node.data;
 };
 
+const find = (node, val) => {
+  if (!node) {
+    return null;
+  }
+
+  if (node.data == val) {
+    return node;
+  }
+
+  if (node.data > val) {
+    return find(node.left, val);
+  }
+
+  if (node.data < val) {
+    return find(node.right, val);
+  }
+};
+
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
@@ -145,6 +163,6 @@ const root = buildTree(sortedArr, 0, sortedArr.length - 1);
 
 const newTree = new Tree(root);
 
-deleteVal(newTree.root, 7);
-
 prettyPrint(newTree.root);
+
+console.log(find(newTree.root, 6));
