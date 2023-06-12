@@ -163,4 +163,26 @@ export default class Tree {
       this.root.data,
     ];
   };
+
+  height = (val) => {
+    return this.heightRec(this.root, val, 0);
+  };
+
+  heightRec = (node, val, height) => {
+    if (!node) return null;
+
+    if (node.data === val) {
+      return height;
+    }
+
+    if (node.data > val) {
+      height++;
+      return this.heightRec(node.left, val, height);
+    }
+
+    if (node.data < val) {
+      height++;
+      return this.heightRec(node.right, val, height);
+    }
+  };
 }
