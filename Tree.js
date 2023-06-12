@@ -164,25 +164,32 @@ export default class Tree {
     ];
   };
 
-  height = (val) => {
-    return this.heightRec(this.root, val, 0);
+  height = (node = this.root) => {
+    if (node === null) return null;
+
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+
+    return Math.max(leftHeight, rightHeight) + 1;
   };
 
-  heightRec = (node, val, height) => {
+  depth = (val) => {
+    return this.depthRec(this.root, val, 0);
+  };
+
+  depthRec = (node, val, depth) => {
     if (!node) return null;
 
-    if (node.data === val) {
-      return height;
-    }
+    if (node.data === val) return depth;
 
     if (node.data > val) {
-      height++;
-      return this.heightRec(node.left, val, height);
+      depth++;
+      return this.depthRec(node.left, val, depth);
     }
 
     if (node.data < val) {
-      height++;
-      return this.heightRec(node.right, val, height);
+      depth++;
+      return this.depthRec(node.right, val, depth);
     }
   };
 }
