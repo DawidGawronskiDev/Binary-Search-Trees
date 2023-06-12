@@ -1,4 +1,5 @@
 import Node from "./Node.js";
+import Queue from "./Queue.js";
 
 export default class Tree {
   constructor(value = new Node(1)) {
@@ -108,5 +109,58 @@ export default class Tree {
     }
 
     return node;
+  };
+
+  levelOrder = () => {
+    return this.levelOrderRec(this.root);
+  };
+
+  levelOrderRec = (node) => {
+    if (!node) return;
+
+    const queue = new Queue();
+    const output = [];
+
+    queue.enqueue(node);
+
+    while (!queue.isEmpty()) {
+      const tempNode = queue.dequeue();
+
+      output.push(tempNode.data);
+
+      if (tempNode.left) {
+        queue.enqueue(tempNode.left);
+      }
+
+      if (tempNode.right) {
+        queue.enqueue(tempNode.right);
+      }
+    }
+
+    return output;
+  };
+
+  preorder = () => {
+    return [
+      this.root.data,
+      ...this.levelOrderRec(this.root.left),
+      ...this.levelOrderRec(this.root.right),
+    ];
+  };
+
+  inorder = () => {
+    return [
+      ...this.levelOrderRec(this.root.left),
+      this.root.data,
+      ...this.levelOrderRec(this.root.right),
+    ];
+  };
+
+  postorder = () => {
+    return [
+      ...this.levelOrderRec(this.root.left),
+      ...this.levelOrderRec(this.root.right),
+      this.root.data,
+    ];
   };
 }
