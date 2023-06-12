@@ -1,13 +1,15 @@
 import Node from "./Node.js";
 import Queue from "./Queue.js";
 
+import transArr from "./transArr.js";
+
 export default class Tree {
   constructor(value = new Node(1)) {
     this.root = value;
   }
 
   buildTree = (arr) => {
-    this.root = this.buildTreeRec(arr);
+    this.root = this.buildTreeRec(transArr(arr));
   };
 
   buildTreeRec = (arr, start = 0, end = arr.length - 1) => {
@@ -191,5 +193,10 @@ export default class Tree {
       depth++;
       return this.depthRec(node.right, val, depth);
     }
+  };
+
+  rebalance = () => {
+    const arr = this.levelOrder();
+    return this.buildTree(transArr(arr));
   };
 }
